@@ -20,20 +20,30 @@ export const goodsApi = createApi({
                 totalGoods: response.totalElements,
                 returnedGoods: response.numberOfElements,
             }),
-            providesTags: ['Goods'],
+            providesTags: result =>
+                result?.partialGoods
+                    ? [
+                          ...result.partialGoods.map(good => ({ type: 'Goods', id: good.id })),
+                          { type: 'Goods', id: 'LIST' },
+                          { type: 'Goods', id: 'PARTIAL-GOODS' },
+                      ]
+                    : [
+                          { type: 'Goods', id: 'LIST' },
+                          { type: 'Goods', id: 'PARTIAL-GOODS' },
+                      ],
         }),
         getGood: builder.query({
             query: id => ({
                 url: `/${id}`,
             }),
-            providesTags: ['Goods'],
+            providesTags: (result, error, id) => [{ type: 'Goods', id }],
         }),
         addGood: builder.mutation({
             query: body => ({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: ['Goods'],
+            invalidatesTags: [{ type: 'Goods', id: 'LIST' }],
         }),
         updateGood: builder.mutation({
             query: body => ({
@@ -41,14 +51,14 @@ export const goodsApi = createApi({
                 method: 'PUT',
                 body,
             }),
-            invalidatesTags: ['Goods'],
+            invalidatesTags: (result, error, body) => [{ type: 'Goods', id: body.id }],
         }),
         deleteGood: builder.mutation({
             query: id => ({
                 url: `/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Goods'],
+            invalidatesTags: [{ type: 'Goods', id: 'PARTIAL-GOODS' }],
         }),
     }),
 })
