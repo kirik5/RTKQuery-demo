@@ -3,7 +3,9 @@ import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, Ta
 import { useGetGoodsQuery } from '../../reducers/goodsApi'
 
 const GoodsList = () => {
-    const { partialGoods, totalPages, pageNumber } = useGetGoodsQuery('?pageSize=10', {
+    const [query, setQuery] = useState(`?pageSize=10`)
+
+    const { partialGoods, totalPages, pageNumber } = useGetGoodsQuery(query, {
         selectFromResult: ({ data }) => ({
             partialGoods: data?.partialGoods,
             totalPages: data?.totalPages,
@@ -11,13 +13,9 @@ const GoodsList = () => {
         }),
     })
 
-    console.log(pageNumber)
-
-    // const [page, setPage] = useState(1)
-    //
-    // const handlePaginationClick = (event, page) => {
-    //     setPage(page)
-    // }
+    const handlePaginationClick = (event, page) => {
+        setQuery(`?pageSize=10&pageNo=${page - 1}`)
+    }
 
     return (
         <>
@@ -47,11 +45,7 @@ const GoodsList = () => {
             </TableContainer>
             {totalPages && (
                 <Box sx={{ padding: '10px', display: 'flex', justifyContent: 'center' }}>
-                    <Pagination
-                        count={totalPages}
-                        page={pageNumber + 1}
-                        // onChange={handlePaginationClick}
-                    />
+                    <Pagination count={totalPages} page={pageNumber + 1} onChange={handlePaginationClick} />
                 </Box>
             )}
         </>
