@@ -1,20 +1,38 @@
 import React, { useState } from 'react'
-import { Box, Button, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Pagination,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+} from '@mui/material'
 import { useGetGoodsQuery } from '../../reducers/goodsApi'
 
 const GoodsList = () => {
     const [query, setQuery] = useState(`?pageSize=10&pageNo=0`)
 
-    const [skip, setSkip] = useState(true)
+    // const [skip, setSkip] = useState(true)
 
-    const { partialGoods, totalPages, pageNumber } = useGetGoodsQuery(query, {
-        skip: skip,
-        selectFromResult: ({ data }) => ({
+    const { partialGoods, totalPages, pageNumber, isLoadingGoods, isFetchingGoods, isErrorGoods } = useGetGoodsQuery(query, {
+        // skip: skip,
+        selectFromResult: ({ data, isLoading, isFetching, isError }) => ({
             partialGoods: data?.partialGoods,
             totalPages: data?.totalPages,
             pageNumber: data?.pageNumber,
+            isLoadingGoods: isLoading,
+            isFetchingGoods: isFetching,
+            isErrorGoods: isError,
         }),
     })
+
+    console.log(isFetchingGoods)
 
     const handlePaginationClick = (event, page) => {
         setQuery(`?pageSize=10&pageNo=${page - 1}`)
@@ -24,9 +42,9 @@ const GoodsList = () => {
 
     return (
         <>
-            <Button variant="contained" onClick={handleButtonClick} disabled={!skip}>
-                Start fetch data
-            </Button>
+            {/*<Button variant="contained" onClick={handleButtonClick} disabled={!skip}>*/}
+            {/*    Start fetch data*/}
+            {/*</Button>*/}
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -54,6 +72,36 @@ const GoodsList = () => {
             {totalPages && (
                 <Box sx={{ padding: '10px', display: 'flex', justifyContent: 'center' }}>
                     <Pagination count={totalPages} page={pageNumber + 1} onChange={handlePaginationClick} />
+                </Box>
+            )}
+            {(isLoadingGoods || isFetchingGoods) && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        position: 'fixed',
+                        top: '50%',
+                        left: '50%',
+                        height: '100%',
+                        width: '100%',
+                        transform: 'translate(-50% -50%)',
+                    }}
+                >
+                    <CircularProgress />
+                </Box>
+            )}
+            {isErrorGoods && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        position: 'fixed',
+                        top: '50%',
+                        left: '50%',
+                        height: '100%',
+                        width: '100%',
+                        transform: 'translate(-50% -50%)',
+                    }}
+                >
+                    <Typography sx={{ color: 'red' }}>ERROR!!!</Typography>
                 </Box>
             )}
         </>
