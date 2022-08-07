@@ -6,6 +6,7 @@ export const goodsApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: GOODS_PATH,
     }),
+    tagTypes: ['Goods'],
     endpoints: builder => ({
         getGoods: builder.query({
             query: (query = '') => ({
@@ -19,10 +20,18 @@ export const goodsApi = createApi({
                 totalGoods: response.totalElements,
                 returnedGoods: response.numberOfElements,
             }),
+            providesTags: ['Goods'],
+        }),
+        addGood: builder.mutation({
+            query: body => ({
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Goods'],
         }),
     }),
 })
 
-export const { useGetGoodsQuery } = goodsApi
+export const { useGetGoodsQuery, useAddGoodMutation } = goodsApi
 
 // 'https://123.123.123.123/goods?pageSize=10&pageNo=0'

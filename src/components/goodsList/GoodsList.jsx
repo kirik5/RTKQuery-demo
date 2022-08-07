@@ -14,6 +14,7 @@ import {
     Typography,
 } from '@mui/material'
 import { useGetGoodsQuery } from '../../reducers/goodsApi'
+import { useHistory } from 'react-router-dom'
 
 const GoodsList = () => {
     const [query, setQuery] = useState(`?pageSize=10&pageNo=0`)
@@ -32,19 +33,28 @@ const GoodsList = () => {
         }),
     })
 
-    console.log(isFetchingGoods)
+    // console.log(isFetchingGoods)
 
     const handlePaginationClick = (event, page) => {
         setQuery(`?pageSize=10&pageNo=${page - 1}`)
     }
 
-    const handleButtonClick = () => setSkip(false)
+    // const handleButtonClick = () => setSkip(false)
+
+    let history = useHistory()
+
+    const handleGoodAdd = () => history.push('/add')
 
     return (
         <>
             {/*<Button variant="contained" onClick={handleButtonClick} disabled={!skip}>*/}
             {/*    Start fetch data*/}
             {/*</Button>*/}
+
+            <Button variant="contained" onClick={handleGoodAdd}>
+                Add new good
+            </Button>
+
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
