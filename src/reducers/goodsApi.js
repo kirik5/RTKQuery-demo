@@ -24,3 +24,5 @@ export const goodsApi = createApi({
 })
 
 export const { useGetGoodsQuery } = goodsApi
+
+// https://123.123.123.123/goods
