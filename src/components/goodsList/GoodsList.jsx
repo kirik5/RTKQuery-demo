@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Button, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { useGetGoodsQuery } from '../../reducers/goodsApi'
 
 const GoodsList = () => {
     const [query, setQuery] = useState(`?pageSize=10&pageNo=0`)
 
+    const [skip, setSkip] = useState(true)
+
     const { partialGoods, totalPages, pageNumber } = useGetGoodsQuery(query, {
+        skip: skip,
         selectFromResult: ({ data }) => ({
             partialGoods: data?.partialGoods,
             totalPages: data?.totalPages,
@@ -17,8 +20,13 @@ const GoodsList = () => {
         setQuery(`?pageSize=10&pageNo=${page - 1}`)
     }
 
+    const handleButtonClick = () => setSkip(false)
+
     return (
         <>
+            <Button variant="contained" onClick={handleButtonClick} disabled={!skip}>
+                Start fetch data
+            </Button>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
