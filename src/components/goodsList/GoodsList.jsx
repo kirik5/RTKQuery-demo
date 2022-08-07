@@ -13,7 +13,7 @@ import {
     TableRow,
     Typography,
 } from '@mui/material'
-import { useGetGoodsQuery } from '../../reducers/goodsApi'
+import { useDeleteGoodMutation, useGetGoodsQuery } from '../../reducers/goodsApi'
 import { useHistory } from 'react-router-dom'
 
 const GoodsList = () => {
@@ -45,6 +45,13 @@ const GoodsList = () => {
 
     const handleGoodAdd = () => history.push('/add')
 
+    const [deleteGood] = useDeleteGoodMutation()
+
+    const handleDeleteGood = id => () => {
+        console.log('delete good ', id)
+        deleteGood(id)
+    }
+
     return (
         <>
             {/*<Button variant="contained" onClick={handleButtonClick} disabled={!skip}>*/}
@@ -62,6 +69,7 @@ const GoodsList = () => {
                             <TableCell>№</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell align="right">Price</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -74,6 +82,11 @@ const GoodsList = () => {
                                     </TableCell>
                                     <TableCell>{good.name}</TableCell>
                                     <TableCell align="right">{good.price}</TableCell>
+                                    <TableCell>
+                                        <Button variant="contained" onClick={handleDeleteGood(good.id)}>
+                                            Delete
+                                        </Button>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>

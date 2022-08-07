@@ -29,9 +29,16 @@ export const goodsApi = createApi({
             }),
             invalidatesTags: ['Goods'],
         }),
+        deleteGood: builder.mutation({
+            query: id => ({
+                url: `/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Goods'],
+        }),
     }),
 })
 
-export const { useGetGoodsQuery, useAddGoodMutation } = goodsApi
+export const { useGetGoodsQuery, useAddGoodMutation, useDeleteGoodMutation } = goodsApi
 
-// 'https://123.123.123.123/goods?pageSize=10&pageNo=0'
+// 'https://123.123.123.123/goods/121'
