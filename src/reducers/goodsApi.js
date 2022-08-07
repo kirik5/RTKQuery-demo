@@ -22,6 +22,12 @@ export const goodsApi = createApi({
             }),
             providesTags: ['Goods'],
         }),
+        getGood: builder.query({
+            query: id => ({
+                url: `/${id}`,
+            }),
+            providesTags: ['Goods'],
+        }),
         addGood: builder.mutation({
             query: body => ({
                 method: 'POST',
@@ -39,6 +45,6 @@ export const goodsApi = createApi({
     }),
 })
 
-export const { useGetGoodsQuery, useAddGoodMutation, useDeleteGoodMutation } = goodsApi
+export const { useGetGoodsQuery, useGetGoodQuery, useAddGoodMutation, useDeleteGoodMutation } = goodsApi
 
 // 'https://123.123.123.123/goods/121'

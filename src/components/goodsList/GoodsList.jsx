@@ -52,6 +52,10 @@ const GoodsList = () => {
         deleteGood(id)
     }
 
+    const handleViewGood = id => () => {
+        history.push(`/view/${id}`)
+    }
+
     return (
         <>
             {/*<Button variant="contained" onClick={handleButtonClick} disabled={!skip}>*/}
@@ -70,6 +74,7 @@ const GoodsList = () => {
                             <TableCell>Name</TableCell>
                             <TableCell align="right">Price</TableCell>
                             <TableCell></TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -85,6 +90,11 @@ const GoodsList = () => {
                                     <TableCell>
                                         <Button variant="contained" onClick={handleDeleteGood(good.id)}>
                                             Delete
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button variant="contained" onClick={handleViewGood(good.id)}>
+                                            View
                                         </Button>
                                     </TableCell>
                                 </TableRow>
