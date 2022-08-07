@@ -3,7 +3,7 @@ import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, Ta
 import { useGetGoodsQuery } from '../../reducers/goodsApi'
 
 const GoodsList = () => {
-    const [query, setQuery] = useState(`?pageSize=10`)
+    const [query, setQuery] = useState(`?pageSize=10&pageNo=0`)
 
     const { partialGoods, totalPages, pageNumber } = useGetGoodsQuery(query, {
         selectFromResult: ({ data }) => ({
