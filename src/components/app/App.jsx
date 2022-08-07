@@ -5,6 +5,7 @@ import GoodsList from '../goodsList/GoodsList'
 import { Box } from '@mui/material'
 import AddGood from '../addGood/AddGood'
 import ViewGood from '../viewGood/ViewGood'
+import EditGood from '../editGood/EditGood'
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
                 <Route path={'/'} component={GoodsList} exact />
                 <Route path={'/add'} component={AddGood} exact />
                 <Route path={'/view/:id?'} component={ViewGood} exact />
+                <Route path={'/edit/:id?'} component={EditGood} exact />
             </Box>
         </BrowserRouter>
     )

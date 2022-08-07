@@ -56,6 +56,10 @@ const GoodsList = () => {
         history.push(`/view/${id}`)
     }
 
+    const handleEditGood = id => () => {
+        history.push(`/edit/${id}`)
+    }
+
     return (
         <>
             {/*<Button variant="contained" onClick={handleButtonClick} disabled={!skip}>*/}
@@ -73,6 +77,7 @@ const GoodsList = () => {
                             <TableCell>№</TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell align="right">Price</TableCell>
+                            <TableCell></TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                         </TableRow>
@@ -95,6 +100,11 @@ const GoodsList = () => {
                                     <TableCell>
                                         <Button variant="contained" onClick={handleViewGood(good.id)}>
                                             View
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button variant="contained" onClick={handleEditGood(good.id)}>
+                                            Edit
                                         </Button>
                                     </TableCell>
                                 </TableRow>

@@ -35,6 +35,14 @@ export const goodsApi = createApi({
             }),
             invalidatesTags: ['Goods'],
         }),
+        updateGood: builder.mutation({
+            query: body => ({
+                url: `/${body.id}`,
+                method: 'PUT',
+                body,
+            }),
+            invalidatesTags: ['Goods'],
+        }),
         deleteGood: builder.mutation({
             query: id => ({
                 url: `/${id}`,
@@ -45,6 +53,6 @@ export const goodsApi = createApi({
     }),
 })
 
-export const { useGetGoodsQuery, useGetGoodQuery, useAddGoodMutation, useDeleteGoodMutation } = goodsApi
+export const { useGetGoodsQuery, useGetGoodQuery, useAddGoodMutation, useUpdateGoodMutation, useDeleteGoodMutation } = goodsApi
 
 // 'https://123.123.123.123/goods/121'
