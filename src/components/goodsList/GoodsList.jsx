@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
 import { Box, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { useGetGoodsQuery } from '../../reducers/goodsApi'
 
 const GoodsList = () => {
+    const { partialGoods } = useGetGoodsQuery(undefined, {
+        selectFromResult: ({ data }) => ({
+            partialGoods: data?.partialGoods,
+        }),
+    })
+
+    console.log(partialGoods)
+
     const goods = [
         {
             id: 0,
@@ -40,9 +49,9 @@ const GoodsList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {goods &&
-                            goods.length !== 0 &&
-                            goods.map(good => (
+                        {partialGoods &&
+                            partialGoods.length !== 0 &&
+                            partialGoods.map(good => (
                                 <TableRow key={good.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row">
                                         {good.id}
